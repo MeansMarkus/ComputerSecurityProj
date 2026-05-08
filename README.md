@@ -9,6 +9,15 @@ A secure, GUI-based peer-to-peer chat application built in Python using `tkinter
 - **Randomized IVs**: Every message gets a random 16-byte IV to ensure the same plaintext produces different ciphertexts.
 - **Diffie-Hellman Key Exchange**: Negotiate shared secrets securely over the network.
 
+## Project Structure
+
+The codebase is split into four modules:
+
+- **`crypto.py`** — Cryptographic primitives: PBKDF2 key derivation, AES-256-CBC encrypt/decrypt, the double-cipher (AES + ChaCha20) mode, and Diffie-Hellman key exchange. Also defines `KEY_ROTATION_SECS`.
+- **`net.py`** — Length-prefixed framed TCP messaging (`send_framed` / `recv_framed`).
+- **`gui.py`** — `SecureChatApp`, the Tkinter UI. Wires the user controls to the crypto and network layers, and runs the receive loop and key-rotation watcher on background threads.
+- **`main.py`** — Entry point; constructs the Tk root and launches `SecureChatApp`.
+
 ## Prerequisites
 
 - Python 3.x installed on your system.
